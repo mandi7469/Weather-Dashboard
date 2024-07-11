@@ -10,7 +10,7 @@ function citySearch(event) {
 
   if (cityName) {
     getWeather(cityName);
-    getWeeklyForecast()
+    getWeeklyForecast(cityName);
 
     searchInput.value = " ";
   } else {
@@ -70,50 +70,55 @@ function getWeeklyForecast(cityName){
 
 }
 
-function displayWeeklyForecast(data)
+function displayWeeklyForecast(data){
+  let dataDay1 = data.list[3]
+  let dataDay2 = data.list[11]
+  let dataDay3 = data.list[19]
+  let dataDay4 = data.list[27]
+  let dataDay5 = data.list[35]
+  
+  let day1 = $("#day1").children()
+  day1[0].textContent = dayjs(dataDay1.dt_txt.split(" ")[0]).format("MM/DD/YYYY")
+  day1[1].src = `https://openweathermap.org/img/wn/${dataDay1.weather[0].icon}.png`;
+  day1[2].textContent = `Temp: ${dataDay1.main.temp}\u00B0F`
+  day1[3].textContent = `Wind: ${dataDay1.wind.speed} MPH`
+  day1[4].textContent =  `Humidity: ${dataDay1.main.humidity} %`
 
+  let day2 = $("#day2").children()
+  day2[0].textContent = dayjs(dataDay2.dt_txt.split(" ")[0]).format("MM/DD/YYYY")
+  day2[1].src = `https://openweathermap.org/img/wn/${dataDay2.weather[0].icon}.png`;
+  day2[2].textContent = `Temp: ${dataDay2.main.temp}\u00B0F`
+  day2[3].textContent = `Wind: ${dataDay2.wind.speed} MPH`
+  day2[4].textContent =  `Humidity: ${dataDay2.main.humidity} %`
 
+  let day3 = $("#day3").children()
+  day3[0].textContent = dayjs(dataDay3.dt_txt.split(" ")[0]).format("MM/DD/YYYY")
+  day3[1].src = `https://openweathermap.org/img/wn/${dataDay3.weather[0].icon}.png`;
+  day3[2].textContent = `Temp: ${dataDay3.main.temp}\u00B0F`
+  day3[3].textContent = `Wind: ${dataDay3.wind.speed} MPH`
+  day3[4].textContent =  `Humidity: ${dataDay3.main.humidity} %`
 
+  let day4 = $("#day4").children()
+  day4[0].textContent = dayjs(dataDay4.dt_txt.split(" ")[0]).format("MM/DD/YYYY")
+  day4[1].src = `https://openweathermap.org/img/wn/${dataDay4.weather[0].icon}.png`;
+  day4[2].textContent = `Temp: ${dataDay4.main.temp}\u00B0F`
+  day4[3].textContent = `Wind: ${dataDay4.wind.speed} MPH`
+  day4[4].textContent =  `Humidity: ${dataDay4.main.humidity} %`
 
+  let day5 = $("#day5").children()
+  day5[0].textContent = dayjs(dataDay5.dt_txt.split(" ")[0]).format("MM/DD/YYYY")
+  day5[1].src = `https://openweathermap.org/img/wn/${dataDay5.weather[0].icon}.png`;
+  day5[2].textContent = `Temp: ${dataDay5.main.temp}\u00B0F`
+  day5[3].textContent = `Wind: ${dataDay5.wind.speed} MPH`
+  day5[4].textContent =  `Humidity: ${dataDay5.main.humidity} %`
 
-
-
-
-
-
-
-function getApi() {
-  // fetch request gets a list of all the repos for the node.js organization
-  //const requestUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + 1 + "&lon=" +1 + "&appid=" + apiKey
-  const requestUrl =
-    "https://api.openweathermap.org/data/2.5/weather?q=denver&appid=" + apiKey;
-  fetch(requestUrl)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      console.log(data);
-      // ? We use a `for...of` loop here because it's a little less code than a traditional `for` loop. We also don't need to keep track of the index `(i)`.
-      // for (const repo of data) {
-      //   // Creating elements, tablerow, tabledata, and anchor
-      //   const createTableRow = document.createElement('tr');
-      //   const tableData = document.createElement('td');
-      //   const link = document.createElement('a');
-
-      //   // Setting the text of link and the href of the link
-      //   link.textContent = repo.html_url;
-      //   link.href = repo.html_url;
-
-      //   // Appending the link to the tabledata and then appending the tabledata to the tablerow
-      //   // The tablerow then gets appended to the tablebody
-      //   tableData.appendChild(link);
-      //   createTableRow.appendChild(tableData);
-      //   tableBody.appendChild(createTableRow);
-      // }
-    });
 }
-getApi();
 
-//   fetchButton.addEventListener('click', getApi);
+
+
+
+
+
+
 
 searchButton.addEventListener("click", citySearch);
