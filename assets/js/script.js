@@ -9,11 +9,69 @@ function citySearch(event) {
   const cityName = searchInput.value.trim();
 
   if (cityName) {
-    searchInput.value = "";
+    getWeather(cityName);
+    getWeeklyForecast()
+
+    searchInput.value = " ";
   } else {
     alert("Please enter a city name");
   }
 }
+
+function getWeather(cityName) {
+  const requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=${apiKey}`;
+  fetch(requestUrl)
+    .then(function (response) {
+      if (response.ok) {
+        response.json().then(function (data) {
+          console.log(data);
+          displayTodayForecast(data);
+        });
+      } else {
+        alert(`Error:${response.statusText}`);
+      }
+    })
+    .catch(function (error) {
+      alert("Unable to process request");
+    });
+}
+
+function displayTodayForecast(data) {
+  let cityName = $("#city-name")[0]
+  let temp = $("#temp")[0].textContent = `Temp: ${data.main.temp}\u00B0F`
+  let wind = $("#wind")[0].textContent = `Wind: ${data.wind.speed} MPH`
+  let humidity = $("#humidity")[0].textContent = `Humidity: ${data.main.humidity} %`
+  const now = dayjs().format("MM/DD/YYYY");
+
+  const icon = document.createElement("img");
+  icon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+  cityName.textContent = `${data.name} (${now})`;
+  cityName.append(icon)
+}
+
+
+function getWeeklyForecast(cityName){
+  const requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=imperial&appid=${apiKey}`;
+
+  fetch(requestUrl)
+  .then(function (response) {
+    if (response.ok) {
+      response.json().then(function (data) {
+        console.log(data);
+        displayWeeklyForecast(data);
+      });
+    } else {
+      alert(`Error:${response.statusText}`);
+    }
+  })
+  .catch(function (error) {
+    alert("Unable to process request");
+  });
+
+}
+
+function displayWeeklyForecast(data)
+
 
 
 
