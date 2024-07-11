@@ -3,11 +3,17 @@ const apiKey = "2bc1151fda74b88dd261b6c74a71e62f";
 const searchInput = document.querySelector("#search-input");
 const searchButton = document.querySelector("#search-button");
 
+// check local storage for stroed city name or creates a new aray to store the new data 
+const searchData = JSON.parse(localStorage.getItem("cityName")) || [];
+
+// handles the city search submission
 function citySearch(event) {
   event.preventDefault();
 
+  // gets the trimmed city name from the search 
   const cityName = searchInput.value.trim();
 
+  //checks if city name was entered, if so, fetch the weather, if not display an alert if no city name was found
   if (cityName) {
     getWeather(cityName);
     getWeeklyForecast(cityName);
@@ -18,6 +24,7 @@ function citySearch(event) {
   }
 }
 
+// fetches the weather data for a given city name using the API URL and converts the response to JSON 
 function getWeather(cityName) {
   const requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=${apiKey}`;
   fetch(requestUrl)
@@ -25,7 +32,7 @@ function getWeather(cityName) {
       if (response.ok) {
         response.json().then(function (data) {
           console.log(data);
-          displayTodayForecast(data);
+          displayTodayForecast(data); // calls the display today forecast function
         });
       } else {
         alert(`Error:${response.statusText}`);
@@ -36,6 +43,7 @@ function getWeather(cityName) {
     });
 }
 
+// displays the current weather data 
 function displayTodayForecast(data) {
   let cityName = $("#city-name")[0]
   let temp = $("#temp")[0].textContent = `Temp: ${data.main.temp}\u00B0F`
@@ -43,13 +51,14 @@ function displayTodayForecast(data) {
   let humidity = $("#humidity")[0].textContent = `Humidity: ${data.main.humidity} %`
   const now = dayjs().format("MM/DD/YYYY");
 
+  // creates an image element for the weather icon
   const icon = document.createElement("img");
   icon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
   cityName.textContent = `${data.name} (${now})`;
   cityName.append(icon)
 }
 
-
+// fetches the weekly forecast data for a given city using the API URL and converts the responce to JSON
 function getWeeklyForecast(cityName){
   const requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=imperial&appid=${apiKey}`;
 
@@ -70,6 +79,7 @@ function getWeeklyForecast(cityName){
 
 }
 
+//updates the elements to display the weekly forecast for a given city received by the API data
 function displayWeeklyForecast(data){
   let dataDay1 = data.list[3]
   let dataDay2 = data.list[11]
@@ -116,9 +126,5 @@ function displayWeeklyForecast(data){
 
 
 
-
-
-
-
-
+// event listener for the serach button 
 searchButton.addEventListener("click", citySearch);
