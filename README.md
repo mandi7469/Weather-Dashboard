@@ -15,7 +15,7 @@ The application runs in the browser and features dynamically updated HTML and CS
 - Created a list for the city search history and added a feature to click on previous searches to present the current and future weather conditions 
 
 ## Link
-[Link to deplyed website](https://)
+[Link to deplyed website](https://mandi7469.github.io/Weather-Dashboard/)
 
 The image shows the web application's apperance 
 
