@@ -7,13 +7,14 @@ const searchButton = document.querySelector("#search-button");
 const searchData = JSON.parse(localStorage.getItem("cityName")) || [];
 console.log(searchData);
 
+// creates a list of the searched cities 
 function createHistoryButtons() {
   const buttonList = $("#button-list");
   buttonList.empty();
 
   for (let city of searchData) {
     const container = $("<div>").addClass("button-container");
-    // .attr('data-project-id', entry);
+   
 
     const historyButton = $("<button>")
       .addClass("btn btn-secondary d-grid gap-2")
@@ -169,6 +170,7 @@ function displayWeeklyForecast(data) {
 // event listener for the search button
 searchButton.addEventListener("click", citySearch);
 
+//chesk to see if there is any existing searches, if not fetch weather for the defualt city
 $(document).ready(function () {
   if (searchData.length == 0) {
     getWeather("San Diego", false);
